@@ -1,0 +1,348 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Vina+Sans&display=swap');
+
+* {
+    margin: 0px;
+    padding: 0px
+}
+
+
+
+@media all and (max-width: 480px) { 
+
+    .blog-header{
+        flex-direction: column;
+        gap: 20px;
+        align-items: start;
+        justify-content: flex-start !important;
+       
+       
+    }
+    .blog-header button{
+        border-radius: 15px !important;
+       
+    }
+
+    .blog-container{
+        margin: 100px 10px !important;
+    }
+    .comments-container {
+        margin: 25px 5px;
+    }
+    .blog-container h1{
+        font-size: 24px !important;
+    }
+    .blog-container p{
+        font-size: 14px;
+    }
+
+    .cont{
+        justify-content: space-between !important;
+    }
+    .MuiFormControl-root{
+        width: 100% !important;  
+       
+    }
+    .MuiFormControl-root label{
+        font-size: 14px !important;  
+    }
+    
+
+    .home-banner{
+        margin-top: -20px !important;
+    }
+
+    .banner-t{
+        font-size: 30px !important;
+    }
+    .banner-st{
+        font-size:16px;
+    }
+    button{
+        font-size: 14px !important;
+        text-transform: capitalize !important;
+    }
+    .home-main-area{
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center;
+    }
+    .side-container {
+        flex: 1;
+        width: 100%;
+    }
+    .css-10hburv-MuiTypography-root{
+        font-size: 14px !important;
+    }
+    .my-blog-container{
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
+/* app bar */
+#app-bar-logo {
+    cursor: pointer;
+    text-transform: uppercase !important;
+    font-family: "Montserrat";
+    font-weight: bolder;
+    align-items: start;
+    letter-spacing: 5px;
+}
+
+
+
+.signup-container {
+    background-color: #14213D;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+
+}
+
+.signup-form button {
+
+
+    border-radius: 5px;
+    background-color: #000000;
+
+
+
+}
+
+.signup-form {
+    margin: 20px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    width: 70vh;
+    padding: 60px;
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: column;
+
+
+    background-color: rgb(255, 255, 255);
+
+    gap: 15px;
+
+
+}
+
+
+
+.signup-title {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    align-self: center;
+    text-transform: uppercase;
+    font-size: 3em;
+    margin-bottom: 20px;
+
+
+}
+
+.signup-button {
+    font-size: 1em !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+
+}
+
+.app-st {
+    font-size: 1em;
+    font-family: Arial, Helvetica, sans-serif;
+    align-self: center;
+
+}
+
+.nameField {
+    text-transform: lowercase !important;
+
+}
+
+.blog-img {
+    align-self: center;
+    width: 250px;
+    margin-top: -50px;
+    margin-bottom: -50px;
+}
+
+
+/* home-page banner */
+
+.home-banner {
+    margin-top: -10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 95vh !important;
+    max-height: 95vh !important;
+    color: white;
+    background: linear-gradient(-720deg, rgba(0, 0, 0, 0.662), rgba(0, 0, 0, 0.804)), url(https://img.freepik.com/free-photo/blue-sphere-orbits-dark-planet-deep-space-generated-by-ai_188544-21805.jpg?t=st=1700713800~exp=1700717400~hmac=ccd276ce2f11af40c589c8ca59ad3153723af95317565d97f95d8110a54e9db6&w=1060);
+    background-size: cover !important;
+    font-family: 'Montserrat', sans-serif;
+    font-size: x-large;
+    gap: 20px;
+    padding: 20px;
+    text-align: center;
+    background-repeat: repeat-x;
+
+}
+
+
+.banner-t {
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    transition: .5s;
+}
+
+.banner-t:hover {
+    transform: scale(1.05);
+}
+
+.banner-st {
+    font-weight: 400;
+
+}
+
+.home-main-area {
+    padding-top: 10px;
+    /* background-image: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%); */
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+
+}
+
+.side-container {
+    padding: 15px;
+    flex: 0.2;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.create-blog-btn{
+    border-radius: 50px !important;
+    background-color: black !important  ;
+    padding: 10px 20px !important;
+    margin-bottom: 10px;
+    color: white !important;
+}
+
+
+
+.category-button {
+    cursor: pointer;
+
+}
+
+.category-button:hover {
+    background-color: gainsboro !important;
+
+}
+
+.posts-container {
+    padding: 15px;
+    flex: 0.8;
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
+
+}
+
+.blog-container {
+
+    margin: 100px 30px;
+}
+
+.blog-header {
+
+    padding: 10px;
+    border: 2px solid black;
+    display: flex;
+    border-radius: 25px;
+    align-items: center;
+    justify-content: space-between !important;
+
+}
+
+.blog-header input{
+    
+outline: none !important;
+   width: 100%;
+   color: #000000;
+   border: none;
+   font-size: 1em;
+
+}
+.css-1nrlq1o-MuiFormControl-root{
+    width: 40% !important;
+}
+.blog-area{
+    max-width: 100%;
+    padding: 20px 20px ;
+    min-height: 75vh !important;
+    border: 1px solid black;
+    margin-top:20px;
+    border-radius: 25px;
+}
+
+.blog-container img{
+    width: 100% !important;
+    max-height: 55vh;
+    margin-bottom: 20px;
+}
+
+.category{
+    border-radius: 40px !important;
+}
+
+.my-blog-container{
+    display: flex;
+    gap: 10px;
+    margin: 80px 20px;    
+}
+
+.comments-container h1{
+    margin-top: 20px !important;
+    margin-bottom: 10px;
+    max-height: 200px !important;
+}
+
+.comments-container  input{
+    
+    outline: none !important;
+       width: 100%;
+       color: #000000;
+       border: none;
+       font-size: 1em;
+       padding: 20px;
+    
+    }
+
+footer{
+    font-size: 14px !important;
+}
+
+.comment{
+    background-color: #EDF7ED;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+ #comment-date{
+   font-size: smaller;
+   opacity: 0.5;
+}
