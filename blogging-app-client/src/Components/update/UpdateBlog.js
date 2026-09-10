@@ -24,14 +24,14 @@ const UpdatePost = (props) => {
         picture: data.picture,
         username: data.username,
         categories: data.categories,
-        createdDate:  data.createdDate,
-        initialId:data._id,
+        createdDate: data.createdDate,
+        initialId: data._id,
     }
-    
-  
-   
-    
-  
+
+
+
+
+
     const navigator = useNavigate();
     const [url, setUrl] = useState(data.picture);
 
@@ -67,7 +67,7 @@ const UpdatePost = (props) => {
 
                 try {
 
-                    const response = await axios.post("http://localhost:8080/file/upload", data);
+                    const response = await axios.post("https://blog-platform-backend-zt3t.onrender.com/file/upload", data);
 
                     setIsLoading(false);
                     setUrl(response.data.url);
@@ -105,7 +105,7 @@ const UpdatePost = (props) => {
 
     async function updatePost() {
         post.username = username;
-      
+
 
         try {
             const config = {
@@ -115,7 +115,7 @@ const UpdatePost = (props) => {
                 }
             }
 
-            const response = await axios.post("http://localhost:8080/update", post, config)
+            const response = await axios.post("https://blog-platform-backend-zt3t.onrender.com/update", post, config)
             setSnackBarType("success");
             setToOpen(true);
             showSnackBar(response.data.msg);
