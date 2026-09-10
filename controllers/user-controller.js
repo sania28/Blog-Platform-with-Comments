@@ -1,92 +1,121 @@
-const jwt = require("jsonwebtoken")
-require('dotenv').config();
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
 const User = require("../model/user");
-const token = require("../model/token")
+const token = require("../model/token");
 
 const signupUser = async (req, res) => {
-
-
     try {
         const { username, email, password } = req.body;
 
-      
-        var usernameDb = username.toLowerCase()
-       
-        const user = await User.findOne({ username:usernameDb })
-        const emailExists = await User.findOne({ email })
+        const usernameDb = username.toLowerCase();
+
+        const user = await User.findOne({ username: usernameDb });
+        const emailExists = await User.findOne({ email });
+
         if (user) {
-            res.status(501).json({ msg: "Username Already Taken" })
-
+            return res.status(501).json({
+                msg: "Username Already Taken"
+            });
         }
 
-
-        else if (emailExists) {
-            res.status(502).json({ msg: "User with this Email already exists" })
+        if (emailExists) {
+            return res.status(502).json({
+                msg: "User with this Email already exists"
+            });
         }
 
-        else {
-            const newUser = new User({ 
-                username:usernameDb,
-                email:email,
-                password:password
-             });
-            await newUser.save();
-            res.status(200).send("Successfull");
-        }
+        const newUser = new User({
+            username: usernameDb,
+            email: email,
+            password: password
+        });
 
+        await newUser.save();
 
-        // const newUser = new User(user);
-        // await newUser.save();
-
+        return res.status(200).send("Successfull");
 
     } catch (e) {
-      console.log(e)
-        res.status(503).json({ msg: "Internal Server error" })
+        console.log("Signup Error:", e);
+
+        return res.status(503).json({
+            msg: "Internal Server error"
+        });
     }
-
-
-}
+};
 
 const loginUser = async (req, res) => {
-
-
     try {
         const { email, password } = req.body;
 
-      
-    
-        const user = await User.findOne({ email })
-       
-        if (user) {
-          const dbPassword = user.password;
+        const user = await User.findOne({ email });
 
-          if(password===dbPassword){
-
-              const accessToken = jwt.sign(user.toJSON(),process.env.ACCESS_SECRET_KEY)
-              const refreshToken = jwt.sign(user.toJSON(),process.env.REFRESH_SECRET_KEY)
-
-              const newToken = new token({token:refreshToken});
-              await newToken.save();
-
-            res.status(200).json({msg:"Login Successfull", accessToken:accessToken, refreshToken:refreshToken, username:user.username})
-
-          }
-          else{
-            res.status(502).json({msg:"Enter correct password"})
-          }
-
-        }else{
-            res.status(501).json({msg:"User with this email does not exists"})
+        if (!user) {
+            return res.status(501).json({
+                msg: "User with this email does not exists"
+            });
         }
 
-    
+        const dbPassword = user.password;
+
+        if (password !== dbPassword) {
+            return res.status(502).json({
+                msg: "Enter correct password"
+            });
+        }
+
+        // Check JWT secrets before creating tokens
+        if (!process.env.ACCESS_SECRET_KEY) {
+            console.error("ACCESS_SECRET_KEY is missing");
+            return res.status(500).json({
+                msg: "ACCESS_SECRET_KEY is missing on server"
+            });
+        }
+
+        if (!process.env.REFRESH_SECRET_KEY) {
+            console.error("REFRESH_SECRET_KEY is missing");
+            return res.status(500).json({
+                msg: "REFRESH_SECRET_KEY is missing on server"
+            });
+        }
+
+        const userData = user.toJSON();
+
+        const accessToken = jwt.sign(
+            userData,
+            process.env.ACCESS_SECRET_KEY,
+            { expiresIn: "1h" }
+        );
+
+        const refreshToken = jwt.sign(
+            userData,
+            process.env.REFRESH_SECRET_KEY,
+            { expiresIn: "7d" }
+        );
+
+        const newToken = new token({
+            token: refreshToken
+        });
+
+        await newToken.save();
+
+        return res.status(200).json({
+            msg: "Login Successfull",
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+            username: user.username
+        });
 
     } catch (e) {
-      console.log(e)
-        res.status(503).json({ msg: "Internal Server error" })
+        console.log("Login Error:", e);
+
+        return res.status(503).json({
+            msg: "Internal Server error"
+        });
     }
+};
 
-
-}
-
-module.exports = { signupUser,loginUser };
+module.exports = {
+    signupUser,
+    loginUser
+};
