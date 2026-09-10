@@ -13,7 +13,7 @@ export const Footer = () => {
             gap:"10px"
         }}>
                 <hr style={{ width: "30%" }} />
-                <p>Designed and Developed By <b>Ridham</b></p>
+                <p>Designed and Developed By <b>Sania Mujtaba</b></p>
             </div>
         </footer>
     )
