@@ -47,12 +47,10 @@ function LoginSignup() {
         async function onSignUpSubmit() {
             let isValidated = true;
 
-            const validRegex =
-                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-            const strongRegExp = /(?=.*?[#?!@$%^&*-])/;
-            const whitespaceRegExp = /^$|\s+/;
-
+            const validRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const strongRegExp = /[#?!@$%^&*-]/;
+            const whitespaceRegExp = /\s+/;
+            
             const strongPassword =
                 signUp.password.match(strongRegExp);
             const whitespace =
