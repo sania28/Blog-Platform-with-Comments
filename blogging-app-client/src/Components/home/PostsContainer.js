@@ -23,7 +23,7 @@ export const PostsContainer = (props) => {
 
             console.log(`${data} called from postContainer`);
             try {
-                const response = await axios.post("http://localhost:8080/getPosts", data, config)
+                const response = await axios.post("https://blog-platform-backend-zt3t.onrender.com/getPosts", data, config)
                 setPosts(response.data.blogs);
                 setLoading(false)
             }
