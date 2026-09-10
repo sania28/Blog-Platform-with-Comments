@@ -11,29 +11,26 @@ import { useNavigate } from "react-router-dom";
 import blog_img from "./images/blogimg.png";
 
 function LoginSignup() {
+    const navigator = useNavigate();
+    const { setAccount } = useContext(DataContext);
+    const [flag, setFlag] = useState(false);
 
     React.useEffect(() => {
         if (localStorage.getItem("accessToken")) {
             navigator("/home");
         }
-    });
-
-    const navigator = useNavigate();
-    const { setAccount } = useContext(DataContext);
-    var [flag, setFlag] = useState(false);
+    }, [navigator]);
 
     function SignUp() {
-        var [toOpen, setToOpen] = useState(false);
-        var [errorMessage, setErrorMessage] = useState("");
-        var [isLoading, setLoading] = useState(false);
+        const [toOpen, setToOpen] = useState(false);
+        const [errorMessage, setErrorMessage] = useState("");
+        const [isLoading, setLoading] = useState(false);
 
-        const signUpDefaultValues = {
+        const [signUp, setSignUp] = useState({
             username: "",
             email: "",
             password: "",
-        };
-
-        const [signUp, setSignUp] = useState(signUpDefaultValues);
+        });
 
         function showSnackBar(message) {
             setToOpen(true);
@@ -41,25 +38,31 @@ function LoginSignup() {
         }
 
         function onChangeValues(e) {
-            setSignUp({ ...signUp, [e.target.name]: e.target.value });
+            setSignUp({
+                ...signUp,
+                [e.target.name]: e.target.value,
+            });
         }
 
         async function onSignUpSubmit() {
+            let isValidated = true;
 
-            var isValidated = true;
-
-            var validRegex =
+            const validRegex =
                 /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-            let strongRegExp = /(?=.*?[#?!@$%^&*-])/;
-            let whitespaceRegExp = /^$|\s+/;
+            const strongRegExp = /(?=.*?[#?!@$%^&*-])/;
+            const whitespaceRegExp = /^$|\s+/;
 
-            let passwordValue = signUp.password;
+            const strongPassword =
+                signUp.password.match(strongRegExp);
+            const whitespace =
+                signUp.password.match(whitespaceRegExp);
 
-            let strongPassword = passwordValue.match(strongRegExp);
-            let whitespace = passwordValue.match(whitespaceRegExp);
-
-            if (!signUp.username || !signUp.email || !signUp.password) {
+            if (
+                !signUp.username ||
+                !signUp.email ||
+                !signUp.password
+            ) {
                 isValidated = false;
                 showSnackBar("All fields are required!");
             } else if (!signUp.email.match(validRegex)) {
@@ -67,7 +70,9 @@ function LoginSignup() {
                 showSnackBar("Enter Valid Email");
             } else if (whitespace) {
                 isValidated = false;
-                showSnackBar("Whitespaces are not allowed in password");
+                showSnackBar(
+                    "Whitespaces are not allowed in password"
+                );
             } else if (!strongPassword) {
                 isValidated = false;
                 showSnackBar(
@@ -75,32 +80,32 @@ function LoginSignup() {
                 );
             }
 
-            if (isValidated) {
-                setLoading(true);
+            if (!isValidated) {
+                return;
+            }
 
-                try {
-                    const config = {
+            setLoading(true);
+
+            try {
+                const response = await axios.post(
+                    "https://blog-platform-backend-zt3t.onrender.com/signup",
+                    signUp,
+                    {
                         headers: {
-                            "content-type": "application/json",
+                            "Content-Type": "application/json",
                         },
-                    };
+                    }
+                );
 
-                    const response = await axios.post(
-                        "https://blog-platform-backend-zt3t.onrender.com/signup",
-                        signUp,
-                        config
-                    );
-
-                    setAccount(response.data.username);
-                    setLoading(false);
-                    setFlag(true);
-
-                } catch (e) {
-                    showSnackBar(
-                        e.response?.data?.msg || "Signup failed"
-                    );
-                    setLoading(false);
-                }
+                setAccount(response.data.username);
+                setFlag(true);
+                showSnackBar("Registration successful");
+            } catch (e) {
+                showSnackBar(
+                    e.response?.data?.msg || "Signup failed"
+                );
+            } finally {
+                setLoading(false);
             }
         }
 
@@ -109,9 +114,7 @@ function LoginSignup() {
                 <Snackbar
                     open={toOpen}
                     autoHideDuration={6000}
-                    onClose={() => {
-                        setToOpen(false);
-                    }}
+                    onClose={() => setToOpen(false)}
                 >
                     <Alert
                         onClose={() => setToOpen(false)}
@@ -123,11 +126,18 @@ function LoginSignup() {
                 </Snackbar>
 
                 <div className="signup-form">
-
-                    <img src={blog_img} className="blog-img" alt="new" />
+                    <img
+                        src={blog_img}
+                        className="blog-img"
+                        alt="new"
+                    />
 
                     <TextField
-                        inputProps={{ style: { textTransform: "lowercase" } }}
+                        inputProps={{
+                            style: {
+                                textTransform: "lowercase",
+                            },
+                        }}
                         onChange={onChangeValues}
                         required
                         id="outlined-basic"
@@ -161,15 +171,17 @@ function LoginSignup() {
                         onClick={onSignUpSubmit}
                         variant="contained"
                     >
-                        {isLoading ? <CircularProgress /> : "Register"}
+                        {isLoading ? (
+                            <CircularProgress />
+                        ) : (
+                            "Register"
+                        )}
                     </Button>
 
                     <p className="app-st">
                         Already a User?{" "}
                         <b
-                            onClick={() => {
-                                setFlag(true);
-                            }}
+                            onClick={() => setFlag(true)}
                             style={{ cursor: "pointer" }}
                         >
                             Login
@@ -181,19 +193,14 @@ function LoginSignup() {
     }
 
     function Login() {
-
         const [toOpen, setToOpen] = useState(false);
         const [errorMessage, setErrorMessage] = useState("");
         const [isLoading, setLoading] = useState(false);
 
-        const logInDefaultValues = {
+        const [logInValues, setLoginValues] = useState({
             email: "",
             password: "",
-        };
-
-        const [logInValues, setLoginValues] = useState(
-            logInDefaultValues
-        );
+        });
 
         function showSnackBar(message) {
             setToOpen(true);
@@ -208,23 +215,21 @@ function LoginSignup() {
         }
 
         async function onLoginClick() {
-
             try {
                 setLoading(true);
-
-                const config = {
-                    headers: {
-                        "content-type": "application/json",
-                    },
-                };
 
                 const response = await axios.post(
                     "https://blog-platform-backend-zt3t.onrender.com/login",
                     logInValues,
-                    config
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    }
                 );
 
-                // FIXED: Store only the raw JWT token
+                // Store RAW JWT token.
+                // createPost.js will add "Bearer " before sending it.
                 localStorage.setItem(
                     "accessToken",
                     response.data.accessToken
@@ -235,7 +240,6 @@ function LoginSignup() {
                     response.data.username
                 );
 
-                // FIXED: Store only the raw refresh token
                 localStorage.setItem(
                     "refreshToken",
                     response.data.refreshToken
@@ -246,28 +250,23 @@ function LoginSignup() {
                 });
 
                 showSnackBar(response.data.msg);
-                setLoading(false);
 
                 navigator("/home");
-
             } catch (e) {
-                setLoading(false);
-
                 showSnackBar(
                     e.response?.data?.msg || "Login failed"
                 );
+            } finally {
+                setLoading(false);
             }
         }
 
         return (
             <div className="signup-container">
-
                 <Snackbar
                     open={toOpen}
                     autoHideDuration={6000}
-                    onClose={() => {
-                        setToOpen(false);
-                    }}
+                    onClose={() => setToOpen(false)}
                 >
                     <Alert
                         onClose={() => setToOpen(false)}
@@ -279,14 +278,11 @@ function LoginSignup() {
                 </Snackbar>
 
                 <div className="signup-form">
-
                     <img
                         src={blog_img}
                         className="blog-img"
                         alt="new"
                     />
-
-                    <div style={{ display: "flex" }}></div>
 
                     <TextField
                         required
@@ -323,9 +319,7 @@ function LoginSignup() {
                     <p className="app-st">
                         New to BlogNest?{" "}
                         <b
-                            onClick={() => {
-                                setFlag(false);
-                            }}
+                            onClick={() => setFlag(false)}
                             style={{ cursor: "pointer" }}
                         >
                             Create Account
@@ -339,9 +333,9 @@ function LoginSignup() {
     function LoginSignupRender() {
         if (flag) {
             return <Login />;
-        } else {
-            return <SignUp />;
         }
+
+        return <SignUp />;
     }
 
     return <LoginSignupRender />;
