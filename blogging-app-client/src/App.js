@@ -1,5 +1,5 @@
 import React from 'react';
-import { LoginSignup } from './Components/LoginSignup.js';
+import LoginSignup from './Components/LoginSignup.js';
 import DataProvider from './Components/context/dataProvider';
 import { Routes, Route } from "react-router-dom";
 import { Home } from './Components/home/Home';
