@@ -2,82 +2,114 @@
 
 * {
     margin: 0px;
-    padding: 0px
+    padding: 0px;
+    box-sizing: border-box;
 }
 
+@media all and (max-width: 480px) {
 
-
-@media all and (max-width: 480px) { 
-
-    .blog-header{
+    .blog-header {
         flex-direction: column;
         gap: 20px;
         align-items: start;
         justify-content: flex-start !important;
-       
-       
-    }
-    .blog-header button{
-        border-radius: 15px !important;
-       
     }
 
-    .blog-container{
+    .blog-header button {
+        border-radius: 15px !important;
+    }
+
+    .blog-container {
         margin: 100px 10px !important;
     }
+
     .comments-container {
         margin: 25px 5px;
     }
-    .blog-container h1{
+
+    .blog-container h1 {
         font-size: 24px !important;
     }
-    .blog-container p{
+
+    .blog-container p {
         font-size: 14px;
     }
 
-    .cont{
+    .cont {
         justify-content: space-between !important;
     }
-    .MuiFormControl-root{
-        width: 100% !important;  
-       
-    }
-    .MuiFormControl-root label{
-        font-size: 14px !important;  
-    }
-    
 
-    .home-banner{
+    .MuiFormControl-root {
+        width: 100% !important;
+    }
+
+    .MuiFormControl-root label {
+        font-size: 14px !important;
+    }
+
+    .home-banner {
         margin-top: -20px !important;
     }
 
-    .banner-t{
+    .banner-t {
         font-size: 30px !important;
     }
-    .banner-st{
-        font-size:16px;
+
+    .banner-st {
+        font-size: 16px;
     }
-    button{
+
+    button {
         font-size: 14px !important;
         text-transform: capitalize !important;
     }
-    .home-main-area{
+
+    .home-main-area {
         flex-direction: column !important;
         justify-content: center !important;
         align-items: center;
     }
+
     .side-container {
         flex: 1;
         width: 100%;
     }
-    .css-10hburv-MuiTypography-root{
+
+    .css-10hburv-MuiTypography-root {
         font-size: 14px !important;
     }
-    .my-blog-container{
+
+    .my-blog-container {
         flex-direction: column;
         gap: 20px;
         align-items: center;
         justify-content: center;
+    }
+
+    /* Mobile signup form */
+    .signup-container {
+        width: 100%;
+        min-height: 100vh;
+        height: auto;
+        padding: 20px 10px;
+        overflow-x: hidden;
+    }
+
+    .signup-form {
+        width: 100%;
+        max-width: 400px;
+        margin: 20px auto;
+        padding: 30px 20px;
+    }
+
+    .signup-title {
+        font-size: 2em;
+    }
+
+    .blog-img {
+        width: 180px;
+        margin-top: -30px;
+        margin-bottom: -30px;
     }
 }
 
@@ -93,47 +125,43 @@
 }
 
 
-
+/* signup */
 .signup-container {
     background-color: #14213D;
-    height: 100vh;
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-
-
-
+    padding: 20px;
+    overflow-x: hidden;
 }
 
 .signup-form button {
-
-
     border-radius: 5px;
     background-color: #000000;
-
-
-
 }
 
 .signup-form {
     margin: 20px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    width: 70vh;
-    padding: 60px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+
+    width: 90%;
+    max-width: 500px;
+    box-sizing: border-box;
+
+    padding: 40px;
     border-radius: 5px;
 
     display: flex;
     flex-direction: column;
 
-
     background-color: rgb(255, 255, 255);
 
     gap: 15px;
-
-
 }
-
-
 
 .signup-title {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -141,27 +169,22 @@
     text-transform: uppercase;
     font-size: 3em;
     margin-bottom: 20px;
-
-
 }
 
 .signup-button {
     font-size: 1em !important;
     margin-top: 10px !important;
     margin-bottom: 10px !important;
-
 }
 
 .app-st {
     font-size: 1em;
     font-family: Arial, Helvetica, sans-serif;
     align-self: center;
-
 }
 
 .nameField {
     text-transform: lowercase !important;
-
 }
 
 .blog-img {
@@ -183,7 +206,8 @@
     height: 95vh !important;
     max-height: 95vh !important;
     color: white;
-    background: linear-gradient(-720deg, rgba(0, 0, 0, 0.662), rgba(0, 0, 0, 0.804)), url(https://img.freepik.com/free-photo/blue-sphere-orbits-dark-planet-deep-space-generated-by-ai_188544-21805.jpg?t=st=1700713800~exp=1700717400~hmac=ccd276ce2f11af40c589c8ca59ad3153723af95317565d97f95d8110a54e9db6&w=1060);
+    background: linear-gradient(-720deg, rgba(0, 0, 0, 0.662), rgba(0, 0, 0, 0.804)),
+        url(https://img.freepik.com/free-photo/blue-sphere-orbits-dark-planet-deep-space-generated-by-ai_188544-21805.jpg?t=st=1700713800~exp=1700717400~hmac=ccd276ce2f11af40c589c8ca59ad3153723af95317565d97f95d8110a54e9db6&w=1060);
     background-size: cover !important;
     font-family: 'Montserrat', sans-serif;
     font-size: x-large;
@@ -191,9 +215,7 @@
     padding: 20px;
     text-align: center;
     background-repeat: repeat-x;
-
 }
-
 
 .banner-t {
     font-family: 'Montserrat', sans-serif;
@@ -208,16 +230,13 @@
 
 .banner-st {
     font-weight: 400;
-
 }
 
 .home-main-area {
     padding-top: 10px;
-    /* background-image: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%); */
     display: flex;
     flex-direction: row;
     background-color: white;
-
 }
 
 .side-container {
@@ -227,112 +246,101 @@
     flex-direction: column;
 }
 
-
-.create-blog-btn{
+.create-blog-btn {
     border-radius: 50px !important;
-    background-color: black !important  ;
+    background-color: black !important;
     padding: 10px 20px !important;
     margin-bottom: 10px;
     color: white !important;
 }
 
-
-
 .category-button {
     cursor: pointer;
-
 }
 
 .category-button:hover {
     background-color: gainsboro !important;
-
 }
 
 .posts-container {
     padding: 15px;
     flex: 0.8;
-    
+
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 10px;
-
 }
 
 .blog-container {
-
     margin: 100px 30px;
 }
 
 .blog-header {
-
     padding: 10px;
     border: 2px solid black;
     display: flex;
     border-radius: 25px;
     align-items: center;
     justify-content: space-between !important;
-
 }
 
-.blog-header input{
-    
-outline: none !important;
-   width: 100%;
-   color: #000000;
-   border: none;
-   font-size: 1em;
-
+.blog-header input {
+    outline: none !important;
+    width: 100%;
+    color: #000000;
+    border: none;
+    font-size: 1em;
 }
-.css-1nrlq1o-MuiFormControl-root{
+
+.css-1nrlq1o-MuiFormControl-root {
     width: 40% !important;
 }
-.blog-area{
+
+.blog-area {
     max-width: 100%;
-    padding: 20px 20px ;
+    padding: 20px 20px;
     min-height: 75vh !important;
     border: 1px solid black;
-    margin-top:20px;
+    margin-top: 20px;
     border-radius: 25px;
 }
 
-.blog-container img{
+.blog-container img {
     width: 100% !important;
     max-height: 55vh;
     margin-bottom: 20px;
 }
 
-.category{
+.category {
     border-radius: 40px !important;
 }
 
-.my-blog-container{
+.my-blog-container {
     display: flex;
     gap: 10px;
-    margin: 80px 20px;    
+    margin: 80px 20px;
 }
 
-.comments-container h1{
+.comments-container h1 {
     margin-top: 20px !important;
     margin-bottom: 10px;
     max-height: 200px !important;
 }
 
-.comments-container  input{
-    
+.comments-container input {
     outline: none !important;
-       width: 100%;
-       color: #000000;
-       border: none;
-       font-size: 1em;
-       padding: 20px;
-    
-    }
+    width: 100%;
+    color: #000000;
+    border: none;
+    font-size: 1em;
+    padding: 20px;
+}
 
-footer{
+footer {
     font-size: 14px !important;
 }
 
-.comment{
+.comment {
     background-color: #EDF7ED;
     padding: 20px;
     border-radius: 10px;
@@ -340,9 +348,11 @@ footer{
     display: flex;
     flex-direction: column;
     gap: 5px;
-    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+        rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
- #comment-date{
-   font-size: smaller;
-   opacity: 0.5;
+
+#comment-date {
+    font-size: smaller;
+    opacity: 0.5;
 }
