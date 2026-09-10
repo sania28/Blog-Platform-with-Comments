@@ -1,34 +1,48 @@
-require('dotenv').config();
+require("dotenv").config();
 const cloudinary = require("cloudinary").v2;
 
-
-
 cloudinary.config({
-  cloud_name: 'dfzt40dlv',
-  api_key: '264369385758631',
+  cloud_name: "dfzt40dlv",
+  api_key: "264369385758631",
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-
 const upload = (req, res, next) => {
-  const file = req.files.file;
-  const match = ['image/jpg', 'image/png', 'image/jpeg']
-
-  if (match.indexOf(file.mimetype) >= 0)
-    cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
-
-      if (err) {
-        res.status(501).json({ msg: "Internal server error! Try Again!" })
-      }
-      else {
-        req.url = result.secure_url;
-        next();
-      }
-    })
-  else {
-    res.status(501).json({ msg: "Upload Image File Only" })
+  if (!req.files || !req.files.file) {
+    return res.status(400).json({
+      msg: "No image file selected",
+    });
   }
-}
 
+  const file = req.files.file;
+
+  const allowedTypes = [
+    "image/jpg",
+    "image/png",
+    "image/jpeg",
+    "image/webp",
+  ];
+
+  if (!allowedTypes.includes(file.mimetype)) {
+    return res.status(400).json({
+      msg: "Upload JPG, JPEG, PNG or WEBP image only",
+    });
+  }
+
+  cloudinary.uploader.upload(
+    file.tempFilePath,
+    (err, result) => {
+      if (err) {
+        console.log("Cloudinary upload error:", err);
+        return res.status(500).json({
+          msg: "Image upload failed",
+        });
+      }
+
+      req.url = result.secure_url;
+      next();
+    }
+  );
+};
 
 module.exports = upload;
