@@ -1,5 +1,3 @@
-
-
 import axios from "axios";
 import React, { useEffect, useState } from "react"
 import { PostsContainer } from "../home/PostsContainer";
@@ -43,7 +41,7 @@ const MyBlogs = () => {
 
 
             try {
-                const response = await axios.post("http://localhost:8080/myBlogs", data, config)
+                const response = await axios.post("https://blog-platform-backend-zt3t.onrender.com/myBlogs", data, config)
                 setPosts(response.data.allBlogs);
 
             }
@@ -62,6 +60,8 @@ const MyBlogs = () => {
     
 
 
+
+    
     
 
 
@@ -95,5 +95,3 @@ const MyBlogs = () => {
 }
 
 export default MyBlogs;
-
-
