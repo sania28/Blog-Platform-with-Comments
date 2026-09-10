@@ -30,7 +30,7 @@ const BACKEND_URL = "https://blog-platform-backend-zt3t.onrender.com";
 const CreatePost = () => {
     const navigator = useNavigate();
 
-    const [url, setUrl] = useState(
+    const [url] = useState(
         "https://res.cloudinary.com/dfzt40dlv/image/upload/v1701001742/blog-alternate-img_awwz1a.png"
     );
 
@@ -40,7 +40,6 @@ const CreatePost = () => {
     const [errorMessage, setErrorMessage] = useState("");
 
     const [post, setPost] = useState(initialPost);
-    const [file, setFile] = useState("");
 
     const accessToken = localStorage.getItem("accessToken");
     const username = localStorage.getItem("username");
@@ -52,46 +51,6 @@ const CreatePost = () => {
             navigator("/");
         }
     }, [navigator]);
-
-    useEffect(() => {
-        const getImage = async () => {
-            if (!file) {
-                return;
-            }
-
-            setIsLoading(true);
-
-            const data = new FormData();
-            data.append("file", file);
-
-            try {
-                const response = await axios.post(
-                    `${BACKEND_URL}/file/upload`,
-                    data
-                );
-
-                setUrl(response.data.url);
-
-                setPost((prevPost) => ({
-                    ...prevPost,
-                    picture: response.data.url,
-                }));
-
-                setSnackBarType("success");
-                showSnackBar("Image uploaded successfully");
-            } catch (error) {
-                console.log("Image upload error:", error);
-
-                showSnackBar(
-                    error.response?.data?.msg || "Image upload failed"
-                );
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        getImage();
-    }, [file]);
 
     function showSnackBar(message) {
         setErrorMessage(message);
@@ -119,6 +78,7 @@ const CreatePost = () => {
             ...post,
             username: username,
             picture: post.picture || url,
+            createdDate: new Date(),
         };
 
         console.log("Post being sent:", updatedPost);
@@ -159,6 +119,7 @@ const CreatePost = () => {
             setTimeout(() => {
                 navigator("/home");
             }, 1000);
+
         } catch (error) {
             console.log("Create post error:", error);
 
@@ -166,9 +127,10 @@ const CreatePost = () => {
 
             showSnackBar(
                 error.response?.data?.msg ||
-                    error.response?.data?.error ||
-                    "Internal Server Error"
+                error.response?.data?.error ||
+                "Cannot Publish Blog, Try Again."
             );
+
         } finally {
             setIsLoading(false);
         }
@@ -179,6 +141,7 @@ const CreatePost = () => {
             <Header />
 
             <div className="blog-container">
+
                 <Snackbar
                     open={toOpen}
                     autoHideDuration={6000}
@@ -198,7 +161,9 @@ const CreatePost = () => {
                 <img src={url} alt="Blog" />
 
                 <div className="blog-header">
+
                     <div style={{ display: "flex" }}>
+
                         <IconButton>
                             <label htmlFor="fileInput">
                                 <AddPhotoAlternateIcon />
@@ -206,11 +171,6 @@ const CreatePost = () => {
                         </IconButton>
 
                         <input
-                            onChange={(e) => {
-                                if (e.target.files && e.target.files[0]) {
-                                    setFile(e.target.files[0]);
-                                }
-                            }}
                             id="fileInput"
                             style={{ display: "none" }}
                             type="file"
@@ -222,13 +182,16 @@ const CreatePost = () => {
                             placeholder="Blog Title"
                             name="title"
                             className="blog-title-input"
+                            value={post.title}
                         />
+
                     </div>
 
                     <div
                         style={{ display: "flex" }}
                         className="cont"
                     >
+
                         <FormControl
                             style={{
                                 width: "10%",
@@ -236,6 +199,7 @@ const CreatePost = () => {
                                 borderRadius: "40px",
                             }}
                         >
+
                             <InputLabel
                                 className="category"
                                 id="demo-simple-select-label"
@@ -252,6 +216,7 @@ const CreatePost = () => {
                                 value={post.categories}
                                 onChange={handleChange}
                             >
+
                                 <MenuItem value="Music">
                                     Music
                                 </MenuItem>
@@ -271,7 +236,9 @@ const CreatePost = () => {
                                 <MenuItem value="Fashion">
                                     Fashion
                                 </MenuItem>
+
                             </Select>
+
                         </FormControl>
 
                         <Button
@@ -280,9 +247,13 @@ const CreatePost = () => {
                             variant="contained"
                             disabled={isLoading}
                         >
-                            {isLoading ? "Publishing..." : "Publish"}
+                            {isLoading
+                                ? "Publishing..."
+                                : "Publish"}
                         </Button>
+
                     </div>
+
                 </div>
 
                 <textarea
@@ -294,6 +265,7 @@ const CreatePost = () => {
                     cols="195"
                     rows="10"
                 ></textarea>
+
             </div>
 
             <Footer />
