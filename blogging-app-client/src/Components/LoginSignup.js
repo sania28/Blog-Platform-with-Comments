@@ -318,5 +318,5 @@ function LoginSignup() {
     return flag ? <Login /> : <SignUp />;
 }
 
-export { LoginSignup };
+export default LoginSignup;
 ```
