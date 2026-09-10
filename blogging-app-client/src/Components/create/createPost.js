@@ -64,7 +64,7 @@ const CreatePost = () => {
 
                 try {
 
-                    const response = await axios.post("http://localhost:8080/file/upload", data);
+                    const response = await axios.post("https://blog-platform-backend-zt3t.onrender.com/file/upload", data);
 
                     setIsLoading(false);
                     setUrl(response.data.url);
@@ -125,7 +125,7 @@ const CreatePost = () => {
                     }
                 }
 
-                const response = await axios.post("http://localhost:8080/create", post, config)
+                const response = await axios.post("https://blog-platform-backend-zt3t.onrender.com/create", post, config)
                 setSnackBarType("success");
                 setToOpen(true);
                 showSnackBar(response.data.msg);
