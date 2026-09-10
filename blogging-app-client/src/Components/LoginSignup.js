@@ -64,7 +64,10 @@ function LoginSignup() {
                 return;
             }
 
-            if (signUp.password.length <= 5 || !strongRegExp.test(signUp.password)) {
+            if (
+                signUp.password.length <= 5 ||
+                !strongRegExp.test(signUp.password)
+            ) {
                 showSnackBar(
                     "Weak Password, Password length must be greater than 5 and must include any special character"
                 );
