@@ -1,5 +1,5 @@
 ```jsx
-import React, { useState, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./style.css";
 import Button from "@mui/material/Button";
 import axios from "axios";
@@ -15,7 +15,7 @@ function LoginSignup() {
     const { setAccount } = useContext(DataContext);
     const [flag, setFlag] = useState(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (localStorage.getItem("accessToken")) {
             navigator("/home");
         }
@@ -32,53 +32,42 @@ function LoginSignup() {
             password: "",
         });
 
-        function showSnackBar(message) {
-            setToOpen(true);
+        const showSnackBar = (message) => {
             setErrorMessage(message);
-        }
+            setToOpen(true);
+        };
 
-        function onChangeValues(e) {
-            setSignUp({
-                ...signUp,
+        const onChangeValues = (e) => {
+            setSignUp((prev) => ({
+                ...prev,
                 [e.target.name]: e.target.value,
-            });
-        }
+            }));
+        };
 
-        async function onSignUpSubmit() {
-            let isValidated = true;
-
+        const onSignUpSubmit = async () => {
             const validRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const strongRegExp = /[#?!@$%^&*-]/;
             const whitespaceRegExp = /\s+/;
-            
-            const strongPassword =
-                signUp.password.match(strongRegExp);
-            const whitespace =
-                signUp.password.match(whitespaceRegExp);
 
-            if (
-                !signUp.username ||
-                !signUp.email ||
-                !signUp.password
-            ) {
-                isValidated = false;
+            if (!signUp.username || !signUp.email || !signUp.password) {
                 showSnackBar("All fields are required!");
-            } else if (!signUp.email.match(validRegex)) {
-                isValidated = false;
+                return;
+            }
+
+            if (!validRegex.test(signUp.email)) {
                 showSnackBar("Enter Valid Email");
-            } else if (whitespace) {
-                isValidated = false;
-                showSnackBar(
-                    "Whitespaces are not allowed in password"
-                );
-            } else if (!strongPassword) {
-                isValidated = false;
+                return;
+            }
+
+            if (whitespaceRegExp.test(signUp.password)) {
+                showSnackBar("Whitespaces are not allowed in password");
+                return;
+            }
+
+            if (signUp.password.length <= 5 || !strongRegExp.test(signUp.password)) {
                 showSnackBar(
                     "Weak Password, Password length must be greater than 5 and must include any special character"
                 );
-            }
-
-            if (!isValidated) {
                 return;
             }
 
@@ -105,7 +94,7 @@ function LoginSignup() {
             } finally {
                 setLoading(false);
             }
-        }
+        };
 
         return (
             <div className="signup-container">
@@ -127,7 +116,7 @@ function LoginSignup() {
                     <img
                         src={blog_img}
                         className="blog-img"
-                        alt="new"
+                        alt="Blog"
                     />
 
                     <TextField
@@ -138,7 +127,6 @@ function LoginSignup() {
                         }}
                         onChange={onChangeValues}
                         required
-                        id="outlined-basic"
                         label="Username"
                         variant="outlined"
                         name="username"
@@ -147,7 +135,6 @@ function LoginSignup() {
                     <TextField
                         onChange={onChangeValues}
                         required
-                        id="outlined-basic1"
                         label="Email Address"
                         variant="outlined"
                         name="email"
@@ -156,7 +143,6 @@ function LoginSignup() {
                     <TextField
                         onChange={onChangeValues}
                         required
-                        id="outlined-password-input"
                         label="Password"
                         type="password"
                         variant="outlined"
@@ -168,9 +154,10 @@ function LoginSignup() {
                         color="success"
                         onClick={onSignUpSubmit}
                         variant="contained"
+                        disabled={isLoading}
                     >
                         {isLoading ? (
-                            <CircularProgress />
+                            <CircularProgress size={24} />
                         ) : (
                             "Register"
                         )}
@@ -200,19 +187,24 @@ function LoginSignup() {
             password: "",
         });
 
-        function showSnackBar(message) {
-            setToOpen(true);
+        const showSnackBar = (message) => {
             setErrorMessage(message);
-        }
+            setToOpen(true);
+        };
 
-        function onChangeValues(e) {
-            setLoginValues({
-                ...logInValues,
+        const onChangeValues = (e) => {
+            setLoginValues((prev) => ({
+                ...prev,
                 [e.target.name]: e.target.value,
-            });
-        }
+            }));
+        };
 
-        async function onLoginClick() {
+        const onLoginClick = async () => {
+            if (!logInValues.email || !logInValues.password) {
+                showSnackBar("Email and password are required!");
+                return;
+            }
+
             try {
                 setLoading(true);
 
@@ -226,8 +218,6 @@ function LoginSignup() {
                     }
                 );
 
-                // Store RAW JWT token.
-                // createPost.js will add "Bearer " before sending it.
                 localStorage.setItem(
                     "accessToken",
                     response.data.accessToken
@@ -247,8 +237,6 @@ function LoginSignup() {
                     username: response.data.username,
                 });
 
-                showSnackBar(response.data.msg);
-
                 navigator("/home");
             } catch (e) {
                 showSnackBar(
@@ -257,7 +245,7 @@ function LoginSignup() {
             } finally {
                 setLoading(false);
             }
-        }
+        };
 
         return (
             <div className="signup-container">
@@ -279,12 +267,11 @@ function LoginSignup() {
                     <img
                         src={blog_img}
                         className="blog-img"
-                        alt="new"
+                        alt="Blog"
                     />
 
                     <TextField
                         required
-                        id="outlined-basic1"
                         name="email"
                         label="Email Address"
                         variant="outlined"
@@ -293,7 +280,6 @@ function LoginSignup() {
 
                     <TextField
                         required
-                        id="outlined-password-input"
                         name="password"
                         label="Password"
                         type="password"
@@ -306,9 +292,10 @@ function LoginSignup() {
                         color="success"
                         onClick={onLoginClick}
                         variant="contained"
+                        disabled={isLoading}
                     >
                         {isLoading ? (
-                            <CircularProgress />
+                            <CircularProgress size={24} />
                         ) : (
                             "Login"
                         )}
@@ -328,15 +315,7 @@ function LoginSignup() {
         );
     }
 
-    function LoginSignupRender() {
-        if (flag) {
-            return <Login />;
-        }
-
-        return <SignUp />;
-    }
-
-    return <LoginSignupRender />;
+    return flag ? <Login /> : <SignUp />;
 }
 
 export default LoginSignup;
