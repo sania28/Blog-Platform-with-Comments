@@ -101,7 +101,7 @@ function LoginSignup() {
                             "content-type": "application/json"
                         }
                     }
-                    const response = await axios.post("http://localhost:8080/signup",
+                    const response = await axios.post("https://blog-platform-backend-zt3t.onrender.com/signup",
                         signUp, config
                     )
                     setAccount(response.data.username)
@@ -214,7 +214,7 @@ function LoginSignup() {
                         "content-type": "application/json"
                     }
                 }
-                const response = await axios.post("http://localhost:8080/login", logInValues, config);
+                const response = await axios.post("https://blog-platform-backend-zt3t.onrender.com/login", logInValues, config);
 
                 localStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`)
                 localStorage.setItem('username', response.data.username)
